@@ -1,8 +1,5 @@
-# A (very) simple starting point to use ES6 & beyond features in the browser today with Webpack and Babel.
+# Example of how to connect to the FactBench API 
 
-Out of the box includes features up to stage 0, tweak to your needs.
-
-Also supports SASS, just create your `*.scss` file in `/app` and require it, or simply change the sample file provided.
 
 ## Usage
 
