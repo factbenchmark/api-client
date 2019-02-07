@@ -1,11 +1,36 @@
 'use strict';
 import './style.scss';
+const { createApolloFetch } = require('apollo-fetch');
 
-// randomly using ES7 object rest spread because it currently raises
-// an error in all browsers, but can be transpiled by Babel
-const { x, y, ...z } = { x: 1, y: 2, a: 3, b: 4 };
-const n = { x, y, ...z };
-if (Object.keys(n).map((key) => n[key]).reduce((p,v) => p + v) === 10) {
-  document.querySelector('#app').insertAdjacentHTML('afterbegin', '<h1>works.</h1>');
+const fetch = createApolloFetch({
+  uri: 'https://us1.prisma.sh/miles-thompson-761e5b/factapi/dev',
+});
+
+
+var hash = window.location.hash;
+if(hash) {
+
+	var query = '{ agents { name } }';
+	console.log(hash);
+	if (hash==="#claims_all") {
+		query = 
+`query {
+	claims {
+		claim_text,
+		claim_timestamp,
+		created,
+		submitted_by { name }
+	}
+}`;
+	}
+
+	
+	fetch({
+	  query: query,
+	}).then(res => {
+	  console.log(res.data);
+	  document.querySelector('#json_query').innerHTML = query;
+	  document.querySelector('#json_result').innerHTML = JSON.stringify(res.data, undefined, 2);
+	});
+
 }
-
